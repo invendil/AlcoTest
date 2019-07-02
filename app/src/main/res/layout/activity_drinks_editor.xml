@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DrinksEditor">
+
+
+    <TextView
+        android:id="@+id/textViewDrinkName"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="40dp"
+        android:text="Название"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/textEditDrinkName"
+        android:layout_width="243dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:text=""
+        android:focusableInTouchMode="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDrinkName" />
+
+    <ProgressBar
+        android:id="@+id/progressBarDrinkInterest"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="244dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEditDrinkName" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerDrinksIcons"
+        android:layout_width="352dp"
+
+        android:layout_height="201px"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="88dp"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarDrinkInterest" />
+
+    <ImageView
+        android:id="@+id/imageDrinkIconPreview"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons"
+        app:srcCompat="@color/colorRed" />
+
+    <ImageView
+        android:id="@+id/imageDrinkIconColor"
+        android:layout_width="34dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="92dp"
+        android:background="@color/colorBlack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons"
+        app:srcCompat="@color/colorRed" />
+
+    <Button
+        android:id="@+id/btnDrinkColorLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginLeft="224dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/btn_triangle"
+        android:rotation="180"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons" />
+
+    <Button
+        android:id="@+id/btnDrinkColorRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/btn_triangle"
+
+        android:layout_centerVertical="true"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons" />
+
+
+</android.support.constraint.ConstraintLayout>
