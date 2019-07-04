@@ -19,6 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textViewDrinkName2"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="132dp"
+        android:text="Процент алкоголя"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/textEditDrinkName"
         android:layout_width="243dp"
@@ -26,40 +38,29 @@
         android:layout_marginStart="56dp"
         android:layout_marginLeft="56dp"
         android:text=""
-        android:focusableInTouchMode="false"
+        android:focusedByDefault="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDrinkName" />
-
-    <ProgressBar
-        android:id="@+id/progressBarDrinkInterest"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="244dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="64dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEditDrinkName" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerDrinksIcons"
         android:layout_width="352dp"
 
         android:layout_height="201px"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="44dp"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarDrinkInterest" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBarDrinkInterest" />
 
     <ImageView
         android:id="@+id/imageDrinkIconPreview"
         android:layout_width="300px"
         android:layout_height="300px"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons"
         app:srcCompat="@color/colorRed" />
@@ -68,9 +69,9 @@
         android:id="@+id/imageDrinkIconColor"
         android:layout_width="34dp"
         android:layout_height="33dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginLeft="280dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginLeft="260dp"
+        android:layout_marginTop="76dp"
         android:background="@color/colorBlack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons"
@@ -80,9 +81,9 @@
         android:id="@+id/btnDrinkColorLeft"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="224dp"
-        android:layout_marginLeft="224dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginLeft="208dp"
+        android:layout_marginTop="68dp"
         android:background="@drawable/btn_triangle"
         android:rotation="180"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,13 +93,47 @@
         android:id="@+id/btnDrinkColorRight"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="320dp"
-        android:layout_marginLeft="320dp"
-        android:layout_marginTop="84dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="296dp"
+        android:layout_marginLeft="296dp"
+        android:layout_marginTop="68dp"
+
         android:background="@drawable/btn_triangle"
 
-        android:layout_centerVertical="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons" />
 
+    <SeekBar
+        android:id="@+id/seekBarDrinkInterest"
+        android:layout_width="221dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEditDrinkName" />
+
+    <TextView
+        android:id="@+id/textSeekBarState"
+        android:layout_width="42dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/seekBarDrinkInterest"
+        app:layout_constraintTop_toBottomOf="@+id/textEditDrinkName" />
+
+    <Button
+        android:id="@+id/btnSaveDrink"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="180dp"
+        android:text="Сохранить"
+        android:textSize="10pt"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerDrinksIcons" />
 

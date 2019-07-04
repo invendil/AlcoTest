@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="555dp" />
+        tools:layout_editor_absoluteY="614dp" />
 
     <HorizontalScrollView
         android:layout_width="395dp"
@@ -34,5 +34,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
     </HorizontalScrollView>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="248dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="148dp"
+        android:max="10"
+        android:progress="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
