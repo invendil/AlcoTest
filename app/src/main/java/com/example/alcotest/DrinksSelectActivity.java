@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.alcotest.adapters.DrinksIconsAdapter;
 import com.example.alcotest.adapters.DrinksSelectAdapter;
@@ -39,6 +42,13 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
     private Button btnChoosen, btnAll, btnAdd;
     public static  DBDrinkORM drinkORM;
     private int currentIcon = DRINKS_ITEM_ID[0], currentColor = 0;
+    private ProgressBar progressBar;
+    private TextView progressBarPercent;
+    private Button incButton;
+
+    private int mProgressBarStatus;
+
+    private Handler mHandler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +77,35 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
         Log.d(LOG_TAG,"recycle Init");
         recyclerViewDrinksSelect.setAdapter(drinksSelectAdapter);
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBarPercent = findViewById(R.id.textProgressBarPercent);
 
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {while(true){
+                android.os.SystemClock.sleep(1000);
+                synchronized (progressBar){
+                    mProgressBarStatus = progressBar.getProgress();
+                }
+                while(mProgressBarStatus > 0){
+                    android.os.SystemClock.sleep(100);
+                    synchronized (progressBar){
+                        mProgressBarStatus = progressBar.getProgress();
+                    }
+                    mProgressBarStatus--;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setProgress(mProgressBarStatus);
+                            progressBarPercent.setText(mProgressBarStatus+"%");
+                        }
+                    });
+                }
+            }
+            }
+        }).start();
 
     }
 
@@ -118,19 +156,29 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
 
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }
+
 
     @Override
     public void onDrinksSelectClick(int position) {
-
+        drinkSomeDrink(position);
     }
 
     @Override
     public void onDrinksSelectChoosenClick(int position) {
+        drinkSomeDrink(position);
+    }
+
+    @Override
+    protected void onResume() {
+        drinksSelectAdapter.updateData();
+        drinksSelectChoosenAdapter.updateData();
+        super.onResume();
+    }
+
+    private void drinkSomeDrink(int position){
+        mProgressBarStatus = mProgressBarStatus + 5 > 100? mProgressBarStatus = 100:mProgressBarStatus + 5;
+        progressBar.setProgress(mProgressBarStatus);
+        progressBarPercent.setText(mProgressBarStatus+"%");
 
     }
 }

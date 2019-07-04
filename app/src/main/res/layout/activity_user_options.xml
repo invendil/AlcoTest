@@ -1,9 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserOptionsActivity">
+    tools:context=".UserOptionsActivity"
+    android:orientation="vertical"
+    android:padding="5pt"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/textUserOptionsWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Ваш вес:  "
+        android:textSize="10pt"
+        android:textStyle="bold"
+        />
+
+    <SeekBar
+        android:id="@+id/seekBarUserOptionsWeight"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:max="200"
+        android:min="40"
+
+
+
+        />
+
+
+    <TextView
+        android:id="@+id/textUserOptionsAlcInfluence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Влияние алкоголя:"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="20dp"
+        android:textSize="10pt"
+        android:textStyle="bold"
+        />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/radioGroupUserOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioBtnUserOptionsLow"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="10pt"
+            android:text="низкая"
+
+            android:textStyle="normal" />
+
+        <RadioButton
+            android:id="@+id/radioBtnUserOptionsMiddle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="10pt"
+            android:checked="true"
+            android:text="средняя" />
+
+        <RadioButton
+            android:id="@+id/radioBtnUserOptionsHigh"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="10pt"
+            android:text="высокая" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnUserOptionssSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:text="Сохранить"
+        android:textSize="10pt" />
+
+</LinearLayout>

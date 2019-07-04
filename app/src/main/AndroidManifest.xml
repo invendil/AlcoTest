@@ -10,13 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".UserOptionsActivity"></activity>
-        <activity android:name=".StartActivity" />
-        <activity android:name=".DrinksSelectActivity">
+        <activity android:name=".StartActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".DrinksSelectActivity">
+
         </activity>
         <activity android:name=".DrinksEditor" />
         <activity android:name=".MainActivity" />

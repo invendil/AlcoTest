@@ -1,4 +1,4 @@
-package com.pop4enz.alcostopper;
+package com.example.alcotest.Enums;
 
 import android.os.Handler;
 import android.os.SystemClock;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.alcotest.R;
 
 public class AlcoParty extends AppCompatActivity implements View.OnClickListener{
 

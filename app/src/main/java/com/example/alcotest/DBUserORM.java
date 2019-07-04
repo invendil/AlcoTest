@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class DBUserORM {
     private final String LOG_TAG = "DBUserORM";
     private SQLiteDatabase db ;
-    private String tableName;
+    private String tableName = "user";
     private ContentValues cv ;
     private User user;
     
