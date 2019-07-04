@@ -32,27 +32,27 @@ import static com.example.alcotest.DrinksSelectActivity.drinkORM;
  * Created by Backend Developer on 9/10/2017.
  */
 
-public class DrinksSelectAdapter extends RecyclerView.Adapter<DrinksSelectAdapter.ViewHolder> {
+public class DrinksSelectChoosenAdapter extends RecyclerView.Adapter<DrinksSelectChoosenAdapter.ViewHolder> {
     static final String LOG_TAG = "DrinksSelectAdapter";
     private Context contextActivity;
     private ArrayList<Drink> drinksList;
-    private OnDrinksSelectListner mOnDrinksSelectListner;
+    private OnDrinksSelectChoosenListner mOnDrinksSelectChoosenListner;
 
-    public DrinksSelectAdapter(ArrayList<Drink> data, OnDrinksSelectListner onDrinksSelectListner,Context contextActivity)
+    public DrinksSelectChoosenAdapter(ArrayList<Drink> data, OnDrinksSelectChoosenListner onDrinksSelectChoosenListner, Context contextActivity)
     {
         this.contextActivity = contextActivity;
-        this.mOnDrinksSelectListner = onDrinksSelectListner;
+        this.mOnDrinksSelectChoosenListner = onDrinksSelectChoosenListner;
         this.drinksList= data;
         Log.d(LOG_TAG, "constructor created");
     }
 
     @Override
-    public DrinksSelectAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DrinksSelectChoosenAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.drinks_select_row, parent, false);
+                .inflate(R.layout.drinks_select_choosen_row, parent, false);
 
-        ViewHolder vh = new ViewHolder(v, mOnDrinksSelectListner);
+        ViewHolder vh = new ViewHolder(v, mOnDrinksSelectChoosenListner);
 
         Log.d(LOG_TAG, "ViewHolder created");
         return vh;
@@ -64,45 +64,7 @@ public class DrinksSelectAdapter extends RecyclerView.Adapter<DrinksSelectAdapte
         Drawable renderIcon = renderIconColor(drinksList.get(position).getIconId(),drinksList.get(position).getColorFilterId());
         holder.imageView.setImageDrawable(renderIcon);
         holder.textView.setText(drinksList.get(position).getName());
-        if(drinksList.get(position).isChoosen() == 1 ){holder.btnChoosen.setChecked(true); } else {holder.btnChoosen.setChecked(false);}
-        holder.btnChoosen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToggleButton btn = (ToggleButton)v.findViewById(v.getId());
-                if (btn.isChecked()){
 
-                    drinksList.get(position).setChoosen(1);
-                    drinkORM.save(drinksList.get(position));
-
-                } else {
-
-                    drinksList.get(position).setChoosen(0);
-                    drinkORM.save(drinksList.get(position));
-                }
-                Log.d(LOG_TAG, "drink: " + position +" is "+drinksList.get(position).isChoosen());
-            }
-        });
-
-        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(contextActivity, DrinksEditor.class);
-                mainIntent.putExtra("drink_edit_id", drinksList.get(position).getId());
-                mainIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                contextActivity.startActivity(mainIntent);
-            }
-        });
-
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drinkORM.delete(drinksList.get(position).getId());
-                drinksList.remove(position);
-
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position,drinksList.size());
-            }
-        });
     }
 
     @Override
@@ -111,22 +73,18 @@ public class DrinksSelectAdapter extends RecyclerView.Adapter<DrinksSelectAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        OnDrinksSelectListner onDrinksSelectListner;
+        OnDrinksSelectChoosenListner onDrinksSelectListner;
         final ImageView imageView;
         final TextView textView;
-        final ToggleButton btnChoosen;
-        final Button btnEdit, btnDelete;
 
-        ViewHolder(View v, OnDrinksSelectListner onDrinksSelectListner){
+
+        ViewHolder(View v, OnDrinksSelectChoosenListner onDrinksSelectListner){
             super(v);
 
             this.onDrinksSelectListner = onDrinksSelectListner;
             imageView = (ImageView)v.findViewById(R.id.imageDrinksSelectIcon);
             textView = (TextView)v.findViewById(R.id.textDrinksSelectName);
 
-            btnChoosen = (ToggleButton)v.findViewById(R.id.toggleBtnChoosen);
-            btnEdit = (Button)v.findViewById(R.id.btnEdit);
-            btnDelete = (Button)v.findViewById(R.id.btnDelete);
 
 
             v.setOnClickListener(this);
@@ -134,12 +92,12 @@ public class DrinksSelectAdapter extends RecyclerView.Adapter<DrinksSelectAdapte
 
         @Override
         public void onClick(View v) {
-            onDrinksSelectListner.onDrinksSelectClick(getAdapterPosition());
+            onDrinksSelectListner.onDrinksSelectChoosenClick(getAdapterPosition());
         }
     }
 
-    public interface OnDrinksSelectListner{
-        void onDrinksSelectClick(int position);
+    public interface OnDrinksSelectChoosenListner{
+        void onDrinksSelectChoosenClick(int position);
     }
 
 
@@ -150,5 +108,11 @@ public class DrinksSelectAdapter extends RecyclerView.Adapter<DrinksSelectAdapte
         renderIcon.setColorFilter(contextActivity.getColor(COLOR_LIST[iconColorId]), PorterDuff.Mode.SRC_IN );
         return renderIcon;
 
+    }
+
+    public void updateData() {
+        drinksList.clear();
+        drinksList = drinkORM.getAll("isfavorite = ?", "1");
+        notifyDataSetChanged();
     }
 }

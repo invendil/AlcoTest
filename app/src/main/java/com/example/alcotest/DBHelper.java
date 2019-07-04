@@ -23,9 +23,9 @@ public class DBHelper extends SQLiteOpenHelper {
             // создаем таблицу с полями
             db.execSQL("create table user ("
                     + "id integer primary key,"
-                    + "drink_mood text,"
+                    + "mood text,"
                     + "weight integer,"
-                    + "alc_influence integer"+ ");");
+                    + "alcInfluence integer"+ ");");
             db.execSQL("create table drinks("
                     + "id integer primary key ,"
                     + "name text,"

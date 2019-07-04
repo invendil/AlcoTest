@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.example.alcotest.adapters.DrinksIconsAdapter;
 import com.example.alcotest.adapters.DrinksSelectAdapter;
+import com.example.alcotest.adapters.DrinksSelectChoosenAdapter;
 import com.example.alcotest.entities.Drink;
 
 import java.util.ArrayList;
@@ -27,10 +28,11 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.example.alcotest.DrinksEditor.COLOR_LIST;
 import static com.example.alcotest.DrinksEditor.DRINKS_ITEM_ID;
 
-public class DrinksSelectActivity extends AppCompatActivity implements DrinksSelectAdapter.OnDrinksSelectListner {
+public class DrinksSelectActivity extends AppCompatActivity implements DrinksSelectAdapter.OnDrinksSelectListner, DrinksSelectChoosenAdapter.OnDrinksSelectChoosenListner {
     static final String LOG_TAG = "DrinksSelectActivity";
     private RecyclerView recyclerViewDrinksSelect;
     private DrinksSelectAdapter drinksSelectAdapter;
+    private DrinksSelectChoosenAdapter drinksSelectChoosenAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Drink> drinksList = new ArrayList<Drink>();
     private ImageView imageDrinkIconPreview, imageColor;
@@ -60,6 +62,8 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewDrinksSelect.setLayoutManager(layoutManager);
         drinksSelectAdapter = new DrinksSelectAdapter( drinksList, this, getApplicationContext()  );
+        drinksSelectChoosenAdapter = new DrinksSelectChoosenAdapter( drinksList, this, getApplicationContext()  );
+
         Log.d(LOG_TAG,"recycle Init");
         recyclerViewDrinksSelect.setAdapter(drinksSelectAdapter);
 
@@ -76,6 +80,22 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
                 mainIntent.putExtra("drink_edit_id", -2);
                 mainIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 getApplicationContext().startActivity(mainIntent);
+            }
+        });
+        btnChoosen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drinksSelectChoosenAdapter.updateData();
+                recyclerViewDrinksSelect.setAdapter(drinksSelectChoosenAdapter);
+
+            }
+        });
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drinksSelectAdapter.updateData();
+                recyclerViewDrinksSelect.setAdapter(drinksSelectAdapter);
+
             }
         });
     }
@@ -96,14 +116,21 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
         Log.d(LOG_TAG, "init bd");
     }
 
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     @Override
     public void onDrinksSelectClick(int position) {
 
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
+    public void onDrinksSelectChoosenClick(int position) {
+
     }
 }

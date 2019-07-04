@@ -130,5 +130,35 @@ public class DBDrinkORM {
         Log.d(LOG_TAG, "deleted rows count = " + delCount);
     }
 
+    public ArrayList<Drink> getAll(String selection, String selArgument){
+        Cursor c = db.query("drinks", null,selection,new String[]{selArgument}, null, null, null);
 
+        drinks = new ArrayList<Drink>();
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (c.moveToFirst()) {
+
+            // определяем номера столбцов по имени в выборке
+            int idColIndex = c.getColumnIndex("id");
+            int nameColIndex = c.getColumnIndex("name");
+            int interestColIndex = c.getColumnIndex("alc_interest");
+            int iconIdColIndex = c.getColumnIndex("icon_id");
+            int colorIdColIndex = c.getColumnIndex("color_id");
+            int isfavoriteColIndex = c.getColumnIndex("isfavorite");
+            do {
+                drink = new Drink();
+                drink.setId(c.getInt(idColIndex));
+                drink.setName(c.getString(nameColIndex));
+                drink.setAlcInterest(c.getInt(interestColIndex));
+                drink.setIconId(c.getInt(iconIdColIndex));
+                drink.setColorFilterId(c.getInt(colorIdColIndex));
+                drink.setChoosen(c.getInt(isfavoriteColIndex));
+                drinks.add(drink);
+                Log.d(LOG_TAG, "found");
+            } while (c.moveToNext());
+        }
+        Log.d(LOG_TAG, "0 rows");
+        c.close();
+        return drinks;
+    }
 }

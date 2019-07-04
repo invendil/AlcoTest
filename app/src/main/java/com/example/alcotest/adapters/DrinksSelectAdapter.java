@@ -151,4 +151,10 @@ public class DrinksSelectAdapter extends RecyclerView.Adapter<DrinksSelectAdapte
         return renderIcon;
 
     }
+
+    public void updateData() {
+        drinksList.clear();
+        drinksList = drinkORM.getAll();
+        notifyDataSetChanged();
+    }
 }
