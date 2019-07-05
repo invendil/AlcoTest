@@ -92,12 +92,12 @@ public class DrinksSelectChoosenAdapter extends RecyclerView.Adapter<DrinksSelec
 
         @Override
         public void onClick(View v) {
-            onDrinksSelectListner.onDrinksSelectChoosenClick(getAdapterPosition());
+            onDrinksSelectListner.onDrinksSelectChoosenClick(drinksList.get(getAdapterPosition()).getAlcInterest());
         }
     }
 
     public interface OnDrinksSelectChoosenListner{
-        void onDrinksSelectChoosenClick(int position);
+        void onDrinksSelectChoosenClick(int alcInterest);
     }
 
 

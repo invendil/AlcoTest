@@ -4,6 +4,7 @@ import java.math.*;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -19,17 +20,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alcotest.adapters.DrinksIconsAdapter;
 import com.example.alcotest.adapters.DrinksSelectAdapter;
 import com.example.alcotest.adapters.DrinksSelectChoosenAdapter;
 import com.example.alcotest.entities.Drink;
+import com.example.alcotest.entities.User;
 
 import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.example.alcotest.DrinksEditor.COLOR_LIST;
 import static com.example.alcotest.DrinksEditor.DRINKS_ITEM_ID;
+import static com.example.alcotest.StartActivity.userORM;
 
 public class DrinksSelectActivity extends AppCompatActivity implements DrinksSelectAdapter.OnDrinksSelectListner, DrinksSelectChoosenAdapter.OnDrinksSelectChoosenListner {
     static final String LOG_TAG = "DrinksSelectActivity";
@@ -45,6 +49,9 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
     private ProgressBar progressBar;
     private TextView progressBarPercent;
     private Button incButton;
+    private User user;
+    private Drink drink;
+    private int mood, alcInfluence, weight;
 
     private int mProgressBarStatus;
 
@@ -63,6 +70,9 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
    //   initializeData();
         drinksList = drinkORM.getAll();
 
+        user = userORM.getById(1);
+        mood = user.getMood();
+        weight = user.getWeight();
         btnAdd = (Button)findViewById(R.id.btnDrinksSelectAddNewDrink);
         btnChoosen = (Button)findViewById(R.id.btnDrinksSelectChoosen);
         btnAll = (Button)findViewById(R.id.btnDrinksSelectAll);
@@ -90,7 +100,7 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
                     mProgressBarStatus = progressBar.getProgress();
                 }
                 while(mProgressBarStatus > 0){
-                    android.os.SystemClock.sleep(100);
+                    android.os.SystemClock.sleep(400000/weight);
                     synchronized (progressBar){
                         mProgressBarStatus = progressBar.getProgress();
                     }
@@ -158,14 +168,24 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onDrinksSelectClick(int position) {
-        drinkSomeDrink(position);
+    public void onDrinksSelectClick(int alcInterest) {
+        if(25*mood > mProgressBarStatus) {
+            drinkSomeDrink(alcInterest);
+        } else {
+            Toast.makeText(getApplicationContext(), "Вы превысили лимит", Toast.LENGTH_SHORT).show();
+        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onDrinksSelectChoosenClick(int position) {
-        drinkSomeDrink(position);
+    public void onDrinksSelectChoosenClick(int alcInterest) {
+        if(25*mood > mProgressBarStatus) {
+            drinkSomeDrink(alcInterest);
+        } else {
+            Toast.makeText(getApplicationContext(), "Вы превысили лимит", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -175,9 +195,20 @@ public class DrinksSelectActivity extends AppCompatActivity implements DrinksSel
         super.onResume();
     }
 
-    private void drinkSomeDrink(int position){
-        mProgressBarStatus = mProgressBarStatus + 5 > 100? mProgressBarStatus = 100:mProgressBarStatus + 5;
-        progressBar.setProgress(mProgressBarStatus);
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void drinkSomeDrink(int alcInterest){
+        Drawable pic = progressBar.getProgressDrawable();
+        mProgressBarStatus = mProgressBarStatus + alcInterest/(alcInfluence+1)/4;
+        if (mProgressBarStatus < 25){
+           pic.setColorFilter(Color.GREEN,PorterDuff.Mode.MULTIPLY );
+        } else  if (mProgressBarStatus >= 25 && mProgressBarStatus < 50){
+            pic.setColorFilter(Color.YELLOW,PorterDuff.Mode.MULTIPLY );
+        } else  if (mProgressBarStatus >= 50 && mProgressBarStatus < 75){
+            pic.setColorFilter(getColor(R.color.colorOrange),PorterDuff.Mode.MULTIPLY );
+        } else {
+            pic.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        }
+            progressBar.setProgress(mProgressBarStatus);
         progressBarPercent.setText(mProgressBarStatus+"%");
 
     }

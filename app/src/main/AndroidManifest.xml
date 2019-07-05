@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".DrinksSelectActivity">
-
+            <intent-filter>
+                <action android:name = "android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
         </activity>
         <activity android:name=".DrinksEditor" />
         <activity android:name=".MainActivity" />

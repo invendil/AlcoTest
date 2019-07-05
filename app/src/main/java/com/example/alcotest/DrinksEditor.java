@@ -115,14 +115,14 @@ public class DrinksEditor extends AppCompatActivity implements DrinksIconsAdapte
         ll.addView(myButton, lp);*/
     }
     private void seekBarUse(){
-        seekBarDrinkInterest.setMax(100);
+        seekBarDrinkInterest.setMax(120);
 
         seekBarDrinkInterest.setProgress(drinkEdit.getAlcInterest());
-        textSeekBarState.setText(Integer.toString(drinkEdit.getAlcInterest())+'%');
+        textSeekBarState.setText(Integer.toString(drinkEdit.getAlcInterest())+"мл");
         seekBarDrinkInterest.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textSeekBarState.setText(Integer.toString((int)((float)progress/seekBarDrinkInterest.getMax()*100))+'%');
+                textSeekBarState.setText(seekBar.getProgress()+"мл");
             }
 
             @Override
@@ -209,13 +209,7 @@ public class DrinksEditor extends AppCompatActivity implements DrinksIconsAdapte
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent mainIntent = new Intent(DrinksEditor.this, DrinksSelectActivity.class);
-  //      mainIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(mainIntent);
-    }
+
 
     @Override
     protected void onPause() {
